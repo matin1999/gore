@@ -1,5 +1,6 @@
 package commands
 
+
 import (
 	"errors"
 	"fmt"
@@ -9,20 +10,16 @@ import (
 	"time"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"gore/pkg/env"
 )
 
-var addDetectionJobCmd = &cobra.Command{
-	Use:   "addDetectionJob",
-	Short: "addDetectionJob ",
-	Long:  `run this command like this addDetectionJob {from:unix} {to:unix} {storage:string} {bucket}`,
+var addCurrencyCmd = &cobra.Command{
+	Use:   "AddCurrency",
+	Short: "AddCurrency ",
+	Long:  `run this command like this AddCurrency`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		envs := envs.ReadEnvs()
-		jobLogger, loggerErr := logger.NewLogger(&envs)
-		if loggerErr != nil {
-			fmt.Println(fmt.Sprintf("failed %v", loggerErr))
-			os.Exit(1)
-		}
+		envs := env.ReadEnvs()
 		db, dbErr := db.Init(envs.PG_DSN, jobLogger)
 		if dbErr != nil {
 			fmt.Println(fmt.Sprintf("failed err to initilize postgres db %s", dbErr))
